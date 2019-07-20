@@ -1,0 +1,871 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengbiaoedu.mapper.ClockInUserInfoMapper">
+	<resultMap id="BaseResultMap" type="com.fengbiaoedu.bean.ClockInUserInfo">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="class_id" property="classId" jdbcType="INTEGER" />
+		<result column="operator_id" property="operatorId" jdbcType="INTEGER" />
+		<result column="user_privilege" property="userPrivilege"
+			jdbcType="VARCHAR" />
+		<result column="card_enroll_time" property="cardEnrollTime"
+			jdbcType="TIMESTAMP" />
+		<result column="face_enroll_time" property="faceEnrollTime"
+			jdbcType="TIMESTAMP" />
+		<result column="fp_enroll_time" property="fpEnrollTime"
+			jdbcType="TIMESTAMP" />
+		<result column="password_enroll_time" property="passwordEnrollTime"
+			jdbcType="TIMESTAMP" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.fengbiaoedu.bean.ClockInUserInfoWithBLOBs"
+		extends="BaseResultMap">
+		<result column="enroll_photo" property="enrollPhoto" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp1" property="enrollFp1" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp2" property="enrollFp2" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp3" property="enrollFp3" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp4" property="enrollFp4" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp5" property="enrollFp5" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp6" property="enrollFp6" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp7" property="enrollFp7" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp8" property="enrollFp8" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp9" property="enrollFp9" jdbcType="LONGVARBINARY" />
+		<result column="enroll_fp10" property="enrollFp10" jdbcType="LONGVARBINARY" />
+		<result column="enroll_password" property="enrollPassword"
+			jdbcType="LONGVARBINARY" />
+		<result column="enroll_face" property="enrollFace" jdbcType="LONGVARBINARY" />
+		<result column="enroll_card" property="enrollCard" jdbcType="LONGVARBINARY" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, user_id, name, username, type, status, class_id, operator_id,
+		user_privilege, card_enroll_time, face_enroll_time, fp_enroll_time,
+		password_enroll_time,
+		create_time, update_time
+	</sql>
+	<sql id="Blob_Column_List">
+		enroll_photo, enroll_fp1, enroll_fp2, enroll_fp3, enroll_fp4, enroll_fp5,
+		enroll_fp6,
+		enroll_fp7, enroll_fp8, enroll_fp9, enroll_fp10, enroll_password, enroll_face,
+		enroll_card
+	</sql>
+	<sql id="Base_Table_Name_Column_List">
+		clock_in_user_info.id, clock_in_user_info.user_id, clock_in_user_info.name,
+		clock_in_user_info.user_privilege,
+		clock_in_user_info.card_enroll_time,
+		clock_in_user_info.face_enroll_time,
+		clock_in_user_info.fp_enroll_time,
+		clock_in_user_info.password_enroll_time,
+		clock_in_user_info.create_time, clock_in_user_info.update_time
+	</sql>
+
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.fengbiaoedu.bean.ClockInUserInfoExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from clock_in_user_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.fengbiaoedu.bean.ClockInUserInfoExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from clock_in_user_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from clock_in_user_info
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from clock_in_user_info
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.fengbiaoedu.bean.ClockInUserInfoExample">
+		delete from clock_in_user_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.fengbiaoedu.bean.ClockInUserInfoWithBLOBs">
+		insert into clock_in_user_info (id, user_id, name,
+		username, type, status,
+		class_id, operator_id,
+		user_privilege, card_enroll_time, face_enroll_time,
+		fp_enroll_time, password_enroll_time, create_time,
+		update_time, enroll_photo, enroll_fp1,
+		enroll_fp2, enroll_fp3, enroll_fp4,
+		enroll_fp5, enroll_fp6, enroll_fp7,
+		enroll_fp8, enroll_fp9, enroll_fp10,
+		enroll_password, enroll_face,
+		enroll_card)
+		values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=INTEGER},
+		#{name,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},
+		#{originClockinId,jdbcType=VARCHAR}, #{classId,jdbcType=INTEGER},
+		#{operatorId,jdbcType=INTEGER},
+		#{userPrivilege,jdbcType=VARCHAR}, #{cardEnrollTime,jdbcType=TIMESTAMP},
+		#{faceEnrollTime,jdbcType=TIMESTAMP},
+		#{fpEnrollTime,jdbcType=TIMESTAMP},
+		#{passwordEnrollTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}, #{enrollPhoto,jdbcType=LONGVARBINARY},
+		#{enrollFp1,jdbcType=LONGVARBINARY},
+		#{enrollFp2,jdbcType=LONGVARBINARY},
+		#{enrollFp3,jdbcType=LONGVARBINARY},
+		#{enrollFp4,jdbcType=LONGVARBINARY},
+		#{enrollFp5,jdbcType=LONGVARBINARY},
+		#{enrollFp6,jdbcType=LONGVARBINARY},
+		#{enrollFp7,jdbcType=LONGVARBINARY},
+		#{enrollFp8,jdbcType=LONGVARBINARY},
+		#{enrollFp9,jdbcType=LONGVARBINARY},
+		#{enrollFp10,jdbcType=LONGVARBINARY},
+		#{enrollPassword,jdbcType=LONGVARBINARY},
+		#{enrollFace,jdbcType=LONGVARBINARY},
+		#{enrollCard,jdbcType=LONGVARBINARY})
+	</insert>
+	<insert id="insertSelective" parameterType="com.fengbiaoedu.bean.ClockInUserInfoWithBLOBs">
+		insert into clock_in_user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="classId != null">
+				class_id,
+			</if>
+			<if test="operatorId != null">
+				operator_id,
+			</if>
+			<if test="userPrivilege != null">
+				user_privilege,
+			</if>
+			<if test="cardEnrollTime != null">
+				card_enroll_time,
+			</if>
+			<if test="faceEnrollTime != null">
+				face_enroll_time,
+			</if>
+			<if test="fpEnrollTime != null">
+				fp_enroll_time,
+			</if>
+			<if test="passwordEnrollTime != null">
+				password_enroll_time,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="enrollPhoto != null">
+				enroll_photo,
+			</if>
+			<if test="enrollFp1 != null">
+				enroll_fp1,
+			</if>
+			<if test="enrollFp2 != null">
+				enroll_fp2,
+			</if>
+			<if test="enrollFp3 != null">
+				enroll_fp3,
+			</if>
+			<if test="enrollFp4 != null">
+				enroll_fp4,
+			</if>
+			<if test="enrollFp5 != null">
+				enroll_fp5,
+			</if>
+			<if test="enrollFp6 != null">
+				enroll_fp6,
+			</if>
+			<if test="enrollFp7 != null">
+				enroll_fp7,
+			</if>
+			<if test="enrollFp8 != null">
+				enroll_fp8,
+			</if>
+			<if test="enrollFp9 != null">
+				enroll_fp9,
+			</if>
+			<if test="enrollFp10 != null">
+				enroll_fp10,
+			</if>
+			<if test="enrollPassword != null">
+				enroll_password,
+			</if>
+			<if test="enrollFace != null">
+				enroll_face,
+			</if>
+			<if test="enrollCard != null">
+				enroll_card,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="originClockinId != null">
+				#{originClockinId,jdbcType=VARCHAR},
+			</if>
+			<if test="classId != null">
+				#{classId,jdbcType=INTEGER},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=INTEGER},
+			</if>
+			<if test="userPrivilege != null">
+				#{userPrivilege,jdbcType=VARCHAR},
+			</if>
+			<if test="cardEnrollTime != null">
+				#{cardEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="faceEnrollTime != null">
+				#{faceEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fpEnrollTime != null">
+				#{fpEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="passwordEnrollTime != null">
+				#{passwordEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="enrollPhoto != null">
+				#{enrollPhoto,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp1 != null">
+				#{enrollFp1,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp2 != null">
+				#{enrollFp2,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp3 != null">
+				#{enrollFp3,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp4 != null">
+				#{enrollFp4,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp5 != null">
+				#{enrollFp5,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp6 != null">
+				#{enrollFp6,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp7 != null">
+				#{enrollFp7,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp8 != null">
+				#{enrollFp8,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp9 != null">
+				#{enrollFp9,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp10 != null">
+				#{enrollFp10,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollPassword != null">
+				#{enrollPassword,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFace != null">
+				#{enrollFace,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollCard != null">
+				#{enrollCard,jdbcType=LONGVARBINARY},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.fengbiaoedu.bean.ClockInUserInfoExample"
+		resultType="java.lang.Integer">
+		select count(*) from clock_in_user_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update clock_in_user_info
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=INTEGER},
+			</if>
+			<if test="record.name != null">
+				name = #{record.name,jdbcType=VARCHAR},
+			</if>
+			<if test="record.username != null">
+				username = #{record.username,jdbcType=VARCHAR},
+			</if>
+			<if test="record.type != null">
+				type = #{record.type,jdbcType=TINYINT},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=TINYINT},
+			</if>
+			<if test="record.classId != null">
+				class_id = #{record.classId,jdbcType=INTEGER},
+			</if>
+			<if test="record.operatorId != null">
+				operator_id = #{record.operatorId,jdbcType=INTEGER},
+			</if>
+			<if test="record.userPrivilege != null">
+				user_privilege = #{record.userPrivilege,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cardEnrollTime != null">
+				card_enroll_time = #{record.cardEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.faceEnrollTime != null">
+				face_enroll_time = #{record.faceEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.fpEnrollTime != null">
+				fp_enroll_time = #{record.fpEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.passwordEnrollTime != null">
+				password_enroll_time = #{record.passwordEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateTime != null">
+				update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.enrollPhoto != null">
+				enroll_photo = #{record.enrollPhoto,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp1 != null">
+				enroll_fp1 = #{record.enrollFp1,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp2 != null">
+				enroll_fp2 = #{record.enrollFp2,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp3 != null">
+				enroll_fp3 = #{record.enrollFp3,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp4 != null">
+				enroll_fp4 = #{record.enrollFp4,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp5 != null">
+				enroll_fp5 = #{record.enrollFp5,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp6 != null">
+				enroll_fp6 = #{record.enrollFp6,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp7 != null">
+				enroll_fp7 = #{record.enrollFp7,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp8 != null">
+				enroll_fp8 = #{record.enrollFp8,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp9 != null">
+				enroll_fp9 = #{record.enrollFp9,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFp10 != null">
+				enroll_fp10 = #{record.enrollFp10,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollPassword != null">
+				enroll_password = #{record.enrollPassword,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollFace != null">
+				enroll_face = #{record.enrollFace,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="record.enrollCard != null">
+				enroll_card = #{record.enrollCard,jdbcType=LONGVARBINARY},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update clock_in_user_info
+		set id = #{record.id,jdbcType=BIGINT},
+		user_id = #{record.userId,jdbcType=INTEGER},
+		name = #{record.name,jdbcType=VARCHAR},
+		username = #{record.username,jdbcType=VARCHAR},
+		type = #{record.type,jdbcType=TINYINT},
+		status = #{record.status,jdbcType=TINYINT},
+		class_id = #{record.classId,jdbcType=INTEGER},
+		operator_id = #{record.operatorId,jdbcType=INTEGER},
+		user_privilege = #{record.userPrivilege,jdbcType=VARCHAR},
+		card_enroll_time = #{record.cardEnrollTime,jdbcType=TIMESTAMP},
+		face_enroll_time = #{record.faceEnrollTime,jdbcType=TIMESTAMP},
+		fp_enroll_time = #{record.fpEnrollTime,jdbcType=TIMESTAMP},
+		password_enroll_time = #{record.passwordEnrollTime,jdbcType=TIMESTAMP},
+		create_time = #{record.createTime,jdbcType=TIMESTAMP},
+		update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+		enroll_photo = #{record.enrollPhoto,jdbcType=LONGVARBINARY},
+		enroll_fp1 = #{record.enrollFp1,jdbcType=LONGVARBINARY},
+		enroll_fp2 = #{record.enrollFp2,jdbcType=LONGVARBINARY},
+		enroll_fp3 = #{record.enrollFp3,jdbcType=LONGVARBINARY},
+		enroll_fp4 = #{record.enrollFp4,jdbcType=LONGVARBINARY},
+		enroll_fp5 = #{record.enrollFp5,jdbcType=LONGVARBINARY},
+		enroll_fp6 = #{record.enrollFp6,jdbcType=LONGVARBINARY},
+		enroll_fp7 = #{record.enrollFp7,jdbcType=LONGVARBINARY},
+		enroll_fp8 = #{record.enrollFp8,jdbcType=LONGVARBINARY},
+		enroll_fp9 = #{record.enrollFp9,jdbcType=LONGVARBINARY},
+		enroll_fp10 = #{record.enrollFp10,jdbcType=LONGVARBINARY},
+		enroll_password = #{record.enrollPassword,jdbcType=LONGVARBINARY},
+		enroll_face = #{record.enrollFace,jdbcType=LONGVARBINARY},
+		enroll_card = #{record.enrollCard,jdbcType=LONGVARBINARY}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update clock_in_user_info
+		set id = #{record.id,jdbcType=BIGINT},
+		user_id = #{record.userId,jdbcType=INTEGER},
+		name = #{record.name,jdbcType=VARCHAR},
+		username = #{record.username,jdbcType=VARCHAR},
+		type = #{record.type,jdbcType=TINYINT},
+		status = #{record.status,jdbcType=TINYINT},
+		class_id = #{record.classId,jdbcType=INTEGER},
+		operator_id = #{record.operatorId,jdbcType=INTEGER},
+		user_privilege = #{record.userPrivilege,jdbcType=VARCHAR},
+		card_enroll_time = #{record.cardEnrollTime,jdbcType=TIMESTAMP},
+		face_enroll_time = #{record.faceEnrollTime,jdbcType=TIMESTAMP},
+		fp_enroll_time = #{record.fpEnrollTime,jdbcType=TIMESTAMP},
+		password_enroll_time = #{record.passwordEnrollTime,jdbcType=TIMESTAMP},
+		create_time = #{record.createTime,jdbcType=TIMESTAMP},
+		update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fengbiaoedu.bean.ClockInUserInfoWithBLOBs">
+		update clock_in_user_info
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="classId != null">
+				class_id = #{classId,jdbcType=INTEGER},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=INTEGER},
+			</if>
+			<if test="userPrivilege != null">
+				user_privilege = #{userPrivilege,jdbcType=VARCHAR},
+			</if>
+			<if test="cardEnrollTime != null">
+				card_enroll_time = #{cardEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="faceEnrollTime != null">
+				face_enroll_time = #{faceEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fpEnrollTime != null">
+				fp_enroll_time = #{fpEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="passwordEnrollTime != null">
+				password_enroll_time = #{passwordEnrollTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="enrollPhoto != null">
+				enroll_photo = #{enrollPhoto,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp1 != null">
+				enroll_fp1 = #{enrollFp1,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp2 != null">
+				enroll_fp2 = #{enrollFp2,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp3 != null">
+				enroll_fp3 = #{enrollFp3,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp4 != null">
+				enroll_fp4 = #{enrollFp4,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp5 != null">
+				enroll_fp5 = #{enrollFp5,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp6 != null">
+				enroll_fp6 = #{enrollFp6,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp7 != null">
+				enroll_fp7 = #{enrollFp7,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp8 != null">
+				enroll_fp8 = #{enrollFp8,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp9 != null">
+				enroll_fp9 = #{enrollFp9,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFp10 != null">
+				enroll_fp10 = #{enrollFp10,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollPassword != null">
+				enroll_password = #{enrollPassword,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollFace != null">
+				enroll_face = #{enrollFace,jdbcType=LONGVARBINARY},
+			</if>
+			<if test="enrollCard != null">
+				enroll_card = #{enrollCard,jdbcType=LONGVARBINARY},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fengbiaoedu.bean.ClockInUserInfoWithBLOBs">
+		update clock_in_user_info
+		set user_id = #{userId,jdbcType=INTEGER},
+		name = #{name,jdbcType=VARCHAR},
+		username = #{username,jdbcType=VARCHAR},
+		type = #{type,jdbcType=TINYINT},
+		status = #{status,jdbcType=TINYINT},
+		class_id = #{classId,jdbcType=INTEGER},
+		operator_id = #{operatorId,jdbcType=INTEGER},
+		user_privilege = #{userPrivilege,jdbcType=VARCHAR},
+		card_enroll_time = #{cardEnrollTime,jdbcType=TIMESTAMP},
+		face_enroll_time = #{faceEnrollTime,jdbcType=TIMESTAMP},
+		fp_enroll_time = #{fpEnrollTime,jdbcType=TIMESTAMP},
+		password_enroll_time = #{passwordEnrollTime,jdbcType=TIMESTAMP},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP},
+		enroll_photo = #{enrollPhoto,jdbcType=LONGVARBINARY},
+		enroll_fp1 = #{enrollFp1,jdbcType=LONGVARBINARY},
+		enroll_fp2 = #{enrollFp2,jdbcType=LONGVARBINARY},
+		enroll_fp3 = #{enrollFp3,jdbcType=LONGVARBINARY},
+		enroll_fp4 = #{enrollFp4,jdbcType=LONGVARBINARY},
+		enroll_fp5 = #{enrollFp5,jdbcType=LONGVARBINARY},
+		enroll_fp6 = #{enrollFp6,jdbcType=LONGVARBINARY},
+		enroll_fp7 = #{enrollFp7,jdbcType=LONGVARBINARY},
+		enroll_fp8 = #{enrollFp8,jdbcType=LONGVARBINARY},
+		enroll_fp9 = #{enrollFp9,jdbcType=LONGVARBINARY},
+		enroll_fp10 = #{enrollFp10,jdbcType=LONGVARBINARY},
+		enroll_password = #{enrollPassword,jdbcType=LONGVARBINARY},
+		enroll_face = #{enrollFace,jdbcType=LONGVARBINARY},
+		enroll_card = #{enrollCard,jdbcType=LONGVARBINARY}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fengbiaoedu.bean.ClockInUserInfo">
+		update clock_in_user_info
+		set user_id = #{userId,jdbcType=INTEGER},
+		name = #{name,jdbcType=VARCHAR},
+		username = #{username,jdbcType=VARCHAR},
+		type = #{type,jdbcType=TINYINT},
+		status = #{status,jdbcType=TINYINT},
+		class_id = #{classId,jdbcType=INTEGER},
+		operator_id = #{operatorId,jdbcType=INTEGER},
+		user_privilege = #{userPrivilege,jdbcType=VARCHAR},
+		card_enroll_time = #{cardEnrollTime,jdbcType=TIMESTAMP},
+		face_enroll_time = #{faceEnrollTime,jdbcType=TIMESTAMP},
+		fp_enroll_time = #{fpEnrollTime,jdbcType=TIMESTAMP},
+		password_enroll_time = #{passwordEnrollTime,jdbcType=TIMESTAMP},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateClockInUserInfo" parameterType="map">
+		update clock_in_user_info
+		set
+		user_privilege = #{record.userPrivilege,jdbcType=VARCHAR},
+		card_enroll_time = #{record.cardEnrollTime,jdbcType=TIMESTAMP},
+		face_enroll_time = #{record.faceEnrollTime,jdbcType=TIMESTAMP},
+		fp_enroll_time = #{record.fpEnrollTime,jdbcType=TIMESTAMP},
+		password_enroll_time = #{record.passwordEnrollTime,jdbcType=TIMESTAMP},
+		update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+		enroll_photo = #{record.enrollPhoto,jdbcType=LONGVARBINARY},
+		enroll_fp1 = #{record.enrollFp1,jdbcType=LONGVARBINARY},
+		enroll_fp2 = #{record.enrollFp2,jdbcType=LONGVARBINARY},
+		enroll_fp3 = #{record.enrollFp3,jdbcType=LONGVARBINARY},
+		enroll_fp4 = #{record.enrollFp4,jdbcType=LONGVARBINARY},
+		enroll_fp5 = #{record.enrollFp5,jdbcType=LONGVARBINARY},
+		enroll_fp6 = #{record.enrollFp6,jdbcType=LONGVARBINARY},
+		enroll_fp7 = #{record.enrollFp7,jdbcType=LONGVARBINARY},
+		enroll_fp8 = #{record.enrollFp8,jdbcType=LONGVARBINARY},
+		enroll_fp9 = #{record.enrollFp9,jdbcType=LONGVARBINARY},
+		enroll_fp10 = #{record.enrollFp10,jdbcType=LONGVARBINARY},
+		enroll_password = #{record.enrollPassword,jdbcType=LONGVARBINARY},
+		enroll_face = #{record.enrollFace,jdbcType=LONGVARBINARY},
+		enroll_card = #{record.enrollCard,jdbcType=LONGVARBINARY}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+
+	<select id="selectByClassId" resultMap="ResultMapWithBLOBs"
+		parameterType="map">
+		select
+		<include refid="Base_Table_Name_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from clock_in_user_info
+		INNER JOIN `user` AS u ON u.id = clock_in_user_info.user_id
+		INNER JOIN student_info AS si ON u.id = si.id
+		WHERE
+		si.tb_class_id = #{classId}
+		AND u.id NOT IN (
+		SELECT
+		cmu.user_id
+		FROM
+		clock_in_machine_user AS cmu
+		WHERE
+		cmu.clockin_id = #{clockinId}
+		)
+	</select>
+
+	<insert id="batchInsert" parameterType="map">
+		INSERT INTO `clock_in_user_info` (
+		`user_id`,
+		`name`,
+		`user_privilege`,
+		`create_time`,
+		`type`,
+		`class_id`,
+		operator_id,
+		username
+		)
+		VALUES
+		<foreach collection="list" item="item" separator="," index="index">
+			( #{item.userId},
+			#{item.name},'USER',NOW(),#{item.type},#{item.classId},#{operatorId},#{item.username}
+			)
+		</foreach>
+		ON DUPLICATE KEY UPDATE `user_id` =VALUES(`user_id`)
+
+	</insert>
+
+	<select id="selectByClockInId" parameterType="java.lang.String"
+		resultMap="ResultMapWithBLOBs">
+		SELECT
+		cui.user_id,
+		cui.`name`,
+		cui.user_privilege,
+		cui.card_enroll_time,
+		cui.face_enroll_time,
+		cui.fp_enroll_time,
+		cui.password_enroll_time,
+		cui.enroll_photo,
+		enroll_fp1,
+		enroll_fp2,
+		enroll_fp3,
+		enroll_fp4,
+		enroll_fp5,
+		enroll_fp6,
+		enroll_fp7,
+		enroll_fp8,
+		enroll_fp9,
+		enroll_fp10,
+		cui.enroll_password,
+		enroll_face,
+		enroll_card
+		FROM
+		clock_in_machine_user AS cmu
+		INNER JOIN clock_in_user_info AS cui ON (
+		cmu.user_id = cui.user_id
+		AND cui.`status` = 1
+		)
+		WHERE
+		cmu.clockin_id = #{clockinId}
+		AND cmu.is_deleted = 0
+	</select>
+
+	<select id="selectClockInUserInfoByClassId" resultType="map"
+		resultMap="BaseResultMap">
+		SELECT
+		si.name, si.id AS user_id ,u.type,u.username,si.tb_class_id AS class_id
+		FROM
+		`user` AS u
+		INNER JOIN student_info AS si ON (si.tb_class_id =
+		#{classId} AND u.id = si.id)
+		WHERE
+		NOT EXISTS (
+		SELECT
+		cui.user_id
+		FROM
+		clock_in_user_info AS cui
+		WHERE
+		u.id =cui.user_id
+
+		)
+
+	</select>
+
+	<select id="selectClockInUserInfoByUserIdList" parameterType="map"
+		resultMap="BaseResultMap">
+		SELECT si.name, si.id AS user_id,u.type,u.username,si.tb_class_id AS
+		class_id from student_info AS si
+		INNER JOIN `user` AS u ON (u.type=2 AND si.id =u.id AND u.stealth =2)
+		WHERE
+		si.id IN
+		<foreach collection="userIdList" item="id" index="index" open="("
+			close=")" separator=",">
+			#{id}
+		</foreach>
+		AND NOT EXISTS (
+		SELECT
+		cmu.user_id
+		FROM
+		clock_in_machine_user AS cmu
+		WHERE
+		cmu.clockin_id = #{clockinId}
+		AND si.id =cmu.user_id
+		AND cmu.is_deleted =0
+		)
+		UNION
+		SELECT ti.name, ti.id AS user_id
+		,u.type,u.username,NULL AS class_id from teacher_info AS ti
+		INNER JOIN `user` AS u ON (u.type=1 AND ti.id =u.id AND u.stealth =2)
+		WHERE ti.id IN
+		<foreach collection="userIdList" item="id" index="index" open="("
+			close=")" separator=",">
+			#{id}
+		</foreach>
+		AND NOT EXISTS (
+		SELECT
+		cmu.user_id
+		FROM
+		clock_in_machine_user AS cmu
+		WHERE
+		cmu.clockin_id = #{clockinId}
+		AND ti.id =cmu.user_id
+		AND cmu.is_deleted =0
+		)
+		GROUP BY user_id
+		ORDER BY NULL
+	</select>
+</mapper>

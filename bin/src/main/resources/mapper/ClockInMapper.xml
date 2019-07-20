@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fengbiaoedu.mapper.ClockInMapper">
+	<!--根据打卡人id 和 打卡时间 查询最近需要打卡的信息 -->
+	<select id="getByIdAndTime" resultType="ScheduleStudentScore">
+		SELECT *,ABS( #{thisTime} - stipulate_sginin_time) AS diffTime FROM
+		schedule_student_score
+		WHERE submitter_id = (SELECT id from `user` WHERE id=#{userId})
+		ORDER BY diffTime DESC LIMIT 0,1
+	</select>
+
+	<!--更新学生打卡信息 -->
+	<update id="save" parameterType="ScheduleStudentScore">
+		UPDATE schedule_student_score SET signin = #{signin},signin_time=
+		#{signinTime},update_time = #{updateTime} WHERE
+		schedule_student_score_id = #{scheduleStudentScoreId}
+	</update>
+
+
+</mapper>

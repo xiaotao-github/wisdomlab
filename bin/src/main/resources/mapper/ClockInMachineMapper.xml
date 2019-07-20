@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengbiaoedu.mapper.ClockInMachineMapper">
+	<resultMap id="BaseResultMap" type="com.fengbiaoedu.bean.ClockInMachine">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="clockin_id" property="clockinId" jdbcType="VARCHAR" />
+		<result column="lab_id" property="labId" jdbcType="BIGINT" />
+		<result column="fk_name" property="fkName" jdbcType="VARCHAR" />
+		<result column="operator_id" property="operatorId" jdbcType="INTEGER" />
+		<result column="supported_enroll_data" property="supportedEnrollData"
+			jdbcType="VARCHAR" />
+		<result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+		<result column="total_user_count" property="totalUserCount"
+			jdbcType="SMALLINT" />
+		<result column="user_count" property="userCount" jdbcType="SMALLINT" />
+		<result column="manager_count" property="managerCount"
+			jdbcType="SMALLINT" />
+		<result column="fp_count" property="fpCount" jdbcType="SMALLINT" />
+		<result column="face_count" property="faceCount" jdbcType="SMALLINT" />
+		<result column="password_count" property="passwordCount"
+			jdbcType="SMALLINT" />
+		<result column="idcard_count" property="idcardCount" jdbcType="SMALLINT" />
+		<result column="total_log_count" property="totalLogCount"
+			jdbcType="INTEGER" />
+		<result column="firmware" property="firmware" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, clockin_id, lab_id, fk_name, operator_id, supported_enroll_data,
+		is_deleted,
+		total_user_count, user_count, manager_count, fp_count, face_count, password_count,
+		idcard_count, total_log_count, firmware, create_time, update_time
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.fengbiaoedu.bean.ClockInMachineExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from clock_in_machine
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from clock_in_machine
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from clock_in_machine
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.fengbiaoedu.bean.ClockInMachineExample">
+		delete from clock_in_machine
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.fengbiaoedu.bean.ClockInMachine">
+		insert into clock_in_machine (id, clockin_id, lab_id,
+		fk_name, operator_id, supported_enroll_data,
+		is_deleted, total_user_count, user_count,
+		manager_count, fp_count, face_count,
+		password_count, idcard_count, total_log_count,
+		firmware, create_time, update_time
+		)
+		values (#{id,jdbcType=INTEGER}, #{clockinId,jdbcType=VARCHAR},
+		#{labId,jdbcType=BIGINT},
+		#{fkName,jdbcType=VARCHAR}, #{operatorId,jdbcType=INTEGER},
+		#{supportedEnrollData,jdbcType=VARCHAR},
+		#{isDeleted,jdbcType=BIT}, #{totalUserCount,jdbcType=SMALLINT}, #{userCount,jdbcType=SMALLINT},
+		#{managerCount,jdbcType=SMALLINT}, #{fpCount,jdbcType=SMALLINT},
+		#{faceCount,jdbcType=SMALLINT},
+		#{passwordCount,jdbcType=SMALLINT}, #{idcardCount,jdbcType=SMALLINT}, #{totalLogCount,jdbcType=INTEGER},
+		#{firmware,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.fengbiaoedu.bean.ClockInMachine">
+		insert into clock_in_machine
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="clockinId != null">
+				clockin_id,
+			</if>
+			<if test="labId != null">
+				lab_id,
+			</if>
+			<if test="fkName != null">
+				fk_name,
+			</if>
+			<if test="operatorId != null">
+				operator_id,
+			</if>
+			<if test="supportedEnrollData != null">
+				supported_enroll_data,
+			</if>
+			<if test="isDeleted != null">
+				is_deleted,
+			</if>
+			<if test="totalUserCount != null">
+				total_user_count,
+			</if>
+			<if test="userCount != null">
+				user_count,
+			</if>
+			<if test="managerCount != null">
+				manager_count,
+			</if>
+			<if test="fpCount != null">
+				fp_count,
+			</if>
+			<if test="faceCount != null">
+				face_count,
+			</if>
+			<if test="passwordCount != null">
+				password_count,
+			</if>
+			<if test="idcardCount != null">
+				idcard_count,
+			</if>
+			<if test="totalLogCount != null">
+				total_log_count,
+			</if>
+			<if test="firmware != null">
+				firmware,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="clockinId != null">
+				#{clockinId,jdbcType=VARCHAR},
+			</if>
+			<if test="labId != null">
+				#{labId,jdbcType=BIGINT},
+			</if>
+			<if test="fkName != null">
+				#{fkName,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorId != null">
+				#{operatorId,jdbcType=INTEGER},
+			</if>
+			<if test="supportedEnrollData != null">
+				#{supportedEnrollData,jdbcType=VARCHAR},
+			</if>
+			<if test="isDeleted != null">
+				#{isDeleted,jdbcType=BIT},
+			</if>
+			<if test="totalUserCount != null">
+				#{totalUserCount,jdbcType=SMALLINT},
+			</if>
+			<if test="userCount != null">
+				#{userCount,jdbcType=SMALLINT},
+			</if>
+			<if test="managerCount != null">
+				#{managerCount,jdbcType=SMALLINT},
+			</if>
+			<if test="fpCount != null">
+				#{fpCount,jdbcType=SMALLINT},
+			</if>
+			<if test="faceCount != null">
+				#{faceCount,jdbcType=SMALLINT},
+			</if>
+			<if test="passwordCount != null">
+				#{passwordCount,jdbcType=SMALLINT},
+			</if>
+			<if test="idcardCount != null">
+				#{idcardCount,jdbcType=SMALLINT},
+			</if>
+			<if test="totalLogCount != null">
+				#{totalLogCount,jdbcType=INTEGER},
+			</if>
+			<if test="firmware != null">
+				#{firmware,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.fengbiaoedu.bean.ClockInMachineExample"
+		resultType="java.lang.Integer">
+		select count(*) from clock_in_machine
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update clock_in_machine
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.clockinId != null">
+				clockin_id = #{record.clockinId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.labId != null">
+				lab_id = #{record.labId,jdbcType=BIGINT},
+			</if>
+			<if test="record.fkName != null">
+				fk_name = #{record.fkName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.operatorId != null">
+				operator_id = #{record.operatorId,jdbcType=INTEGER},
+			</if>
+			<if test="record.supportedEnrollData != null">
+				supported_enroll_data =
+				#{record.supportedEnrollData,jdbcType=VARCHAR},
+			</if>
+			<if test="record.isDeleted != null">
+				is_deleted = #{record.isDeleted,jdbcType=BIT},
+			</if>
+			<if test="record.totalUserCount != null">
+				total_user_count = #{record.totalUserCount,jdbcType=SMALLINT},
+			</if>
+			<if test="record.userCount != null">
+				user_count = #{record.userCount,jdbcType=SMALLINT},
+			</if>
+			<if test="record.managerCount != null">
+				manager_count = #{record.managerCount,jdbcType=SMALLINT},
+			</if>
+			<if test="record.fpCount != null">
+				fp_count = #{record.fpCount,jdbcType=SMALLINT},
+			</if>
+			<if test="record.faceCount != null">
+				face_count = #{record.faceCount,jdbcType=SMALLINT},
+			</if>
+			<if test="record.passwordCount != null">
+				password_count = #{record.passwordCount,jdbcType=SMALLINT},
+			</if>
+			<if test="record.idcardCount != null">
+				idcard_count = #{record.idcardCount,jdbcType=SMALLINT},
+			</if>
+			<if test="record.totalLogCount != null">
+				total_log_count = #{record.totalLogCount,jdbcType=INTEGER},
+			</if>
+			<if test="record.firmware != null">
+				firmware = #{record.firmware,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateTime != null">
+				update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update clock_in_machine
+		set id = #{record.id,jdbcType=INTEGER},
+		clockin_id = #{record.clockinId,jdbcType=VARCHAR},
+		lab_id = #{record.labId,jdbcType=BIGINT},
+		fk_name = #{record.fkName,jdbcType=VARCHAR},
+		operator_id = #{record.operatorId,jdbcType=INTEGER},
+		supported_enroll_data = #{record.supportedEnrollData,jdbcType=VARCHAR},
+		is_deleted = #{record.isDeleted,jdbcType=BIT},
+		total_user_count = #{record.totalUserCount,jdbcType=SMALLINT},
+		user_count = #{record.userCount,jdbcType=SMALLINT},
+		manager_count = #{record.managerCount,jdbcType=SMALLINT},
+		fp_count = #{record.fpCount,jdbcType=SMALLINT},
+		face_count = #{record.faceCount,jdbcType=SMALLINT},
+		password_count = #{record.passwordCount,jdbcType=SMALLINT},
+		idcard_count = #{record.idcardCount,jdbcType=SMALLINT},
+		total_log_count = #{record.totalLogCount,jdbcType=INTEGER},
+		firmware = #{record.firmware,jdbcType=VARCHAR},
+		create_time = #{record.createTime,jdbcType=TIMESTAMP},
+		update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.fengbiaoedu.bean.ClockInMachine">
+		update clock_in_machine
+		<set>
+			<if test="clockinId != null">
+				clockin_id = #{clockinId,jdbcType=VARCHAR},
+			</if>
+			<if test="labId != null">
+				lab_id = #{labId,jdbcType=BIGINT},
+			</if>
+			<if test="fkName != null">
+				fk_name = #{fkName,jdbcType=VARCHAR},
+			</if>
+			<if test="operatorId != null">
+				operator_id = #{operatorId,jdbcType=INTEGER},
+			</if>
+			<if test="supportedEnrollData != null">
+				supported_enroll_data = #{supportedEnrollData,jdbcType=VARCHAR},
+			</if>
+			<if test="isDeleted != null">
+				is_deleted = #{isDeleted,jdbcType=BIT},
+			</if>
+			<if test="totalUserCount != null">
+				total_user_count = #{totalUserCount,jdbcType=SMALLINT},
+			</if>
+			<if test="userCount != null">
+				user_count = #{userCount,jdbcType=SMALLINT},
+			</if>
+			<if test="managerCount != null">
+				manager_count = #{managerCount,jdbcType=SMALLINT},
+			</if>
+			<if test="fpCount != null">
+				fp_count = #{fpCount,jdbcType=SMALLINT},
+			</if>
+			<if test="faceCount != null">
+				face_count = #{faceCount,jdbcType=SMALLINT},
+			</if>
+			<if test="passwordCount != null">
+				password_count = #{passwordCount,jdbcType=SMALLINT},
+			</if>
+			<if test="idcardCount != null">
+				idcard_count = #{idcardCount,jdbcType=SMALLINT},
+			</if>
+			<if test="totalLogCount != null">
+				total_log_count = #{totalLogCount,jdbcType=INTEGER},
+			</if>
+			<if test="firmware != null">
+				firmware = #{firmware,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.fengbiaoedu.bean.ClockInMachine">
+		update clock_in_machine
+		set clockin_id = #{clockinId,jdbcType=VARCHAR},
+		lab_id = #{labId,jdbcType=BIGINT},
+		fk_name = #{fkName,jdbcType=VARCHAR},
+		operator_id = #{operatorId,jdbcType=INTEGER},
+		supported_enroll_data = #{supportedEnrollData,jdbcType=VARCHAR},
+		is_deleted = #{isDeleted,jdbcType=BIT},
+		total_user_count = #{totalUserCount,jdbcType=SMALLINT},
+		user_count = #{userCount,jdbcType=SMALLINT},
+		manager_count = #{managerCount,jdbcType=SMALLINT},
+		fp_count = #{fpCount,jdbcType=SMALLINT},
+		face_count = #{faceCount,jdbcType=SMALLINT},
+		password_count = #{passwordCount,jdbcType=SMALLINT},
+		idcard_count = #{idcardCount,jdbcType=SMALLINT},
+		total_log_count = #{totalLogCount,jdbcType=INTEGER},
+		firmware = #{firmware,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

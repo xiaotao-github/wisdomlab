@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fengbiaoedu.mapper.ClockInMachineUserMapper1">
+
+	<insert id="save" parameterType="map" keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="AFTER">
+			select
+			LAST_INSERT_ID();
+		</selectKey>
+		INSERT INTO
+		clock_in_machine_user(clockin_id,user_name,user_id,create_time)
+		VALUES(#{clockInId},#{user.name},#{user.userId},NOW())
+	</insert>
+	<select id="getUserNumber" resultType="int">
+		SELECT
+		u.id
+		FROM
+		clock_in_machine_user AS cu
+		LEFT JOIN `user` AS u ON cu.user_id = u.id
+		WHERE
+		cu.user_id = #{userId}
+	</select>
+
+	<update id="updateIdFalg">
+	</update>
+
+	<delete id="deleteByPrimaryKey">
+		DELETE
+		FROM
+		clock_in_machine_user
+		WHERE
+		clock_in_machine_user.user_id = #{userId}
+	</delete>
+
+	<update id="updateToDeleted">
+		UPDATE clock_in_machine_user AS cmu
+		SET cmu.is_deleted
+		=1
+		WHERE cmu.user_id =#{userId}
+
+	</update>
+</mapper>

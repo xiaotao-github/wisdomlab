@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengbiaoedu.mapper.LabClockInMachineUserMapper" >
+   <resultMap id="BaseResultMap" type="com.fengbiaoedu.bean.LabClockInMachineUser" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="enroll_id" property="enrollId" jdbcType="BIGINT" />
+    <result column="clockin_id" property="clockinId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="operator_id" property="operatorId" jdbcType="INTEGER" />
+    <result column="lab_id" property="labId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="user_privilege" property="userPrivilege" jdbcType="VARCHAR" />
+    <result column="id_flag" property="idFlag" jdbcType="TINYINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fengbiaoedu.bean.LabClockInMachineUser" extends="BaseResultMap" >
+    <result column="enroll_password" property="enrollPassword" jdbcType="LONGVARBINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, enroll_id, clockin_id, user_name, user_id, operator_id, lab_id, create_time, 
+    update_time, user_privilege, id_flag, is_deleted
+  </sql>
+  <sql id="Blob_Column_List" >
+    enroll_password
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fengbiaoedu.bean.LabClockInMachineUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from lab_clock_in_machine_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fengbiaoedu.bean.LabClockInMachineUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from lab_clock_in_machine_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from lab_clock_in_machine_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lab_clock_in_machine_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fengbiaoedu.bean.LabClockInMachineUserExample" >
+    delete from lab_clock_in_machine_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fengbiaoedu.bean.LabClockInMachineUser" >
+    insert into lab_clock_in_machine_user (id, enroll_id, clockin_id, 
+      user_name, user_id, operator_id, 
+      lab_id, create_time, update_time, 
+      user_privilege, id_flag, is_deleted, 
+      enroll_password)
+    values (#{id,jdbcType=BIGINT}, #{enrollId,jdbcType=BIGINT}, #{clockinId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{operatorId,jdbcType=INTEGER}, 
+      #{labId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{userPrivilege,jdbcType=VARCHAR}, #{idFlag,jdbcType=TINYINT}, #{isDeleted,jdbcType=BIT}, 
+      #{enrollPassword,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fengbiaoedu.bean.LabClockInMachineUser" >
+    insert into lab_clock_in_machine_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="enrollId != null" >
+        enroll_id,
+      </if>
+      <if test="clockinId != null" >
+        clockin_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="labId != null" >
+        lab_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="userPrivilege != null" >
+        user_privilege,
+      </if>
+      <if test="idFlag != null" >
+        id_flag,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="enrollPassword != null" >
+        enroll_password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="enrollId != null" >
+        #{enrollId,jdbcType=BIGINT},
+      </if>
+      <if test="clockinId != null" >
+        #{clockinId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="labId != null" >
+        #{labId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userPrivilege != null" >
+        #{userPrivilege,jdbcType=VARCHAR},
+      </if>
+      <if test="idFlag != null" >
+        #{idFlag,jdbcType=TINYINT},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="enrollPassword != null" >
+        #{enrollPassword,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fengbiaoedu.bean.LabClockInMachineUserExample" resultType="java.lang.Integer" >
+    select count(*) from lab_clock_in_machine_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update lab_clock_in_machine_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.enrollId != null" >
+        enroll_id = #{record.enrollId,jdbcType=BIGINT},
+      </if>
+      <if test="record.clockinId != null" >
+        clockin_id = #{record.clockinId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.operatorId != null" >
+        operator_id = #{record.operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.labId != null" >
+        lab_id = #{record.labId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userPrivilege != null" >
+        user_privilege = #{record.userPrivilege,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idFlag != null" >
+        id_flag = #{record.idFlag,jdbcType=TINYINT},
+      </if>
+      <if test="record.isDeleted != null" >
+        is_deleted = #{record.isDeleted,jdbcType=BIT},
+      </if>
+      <if test="record.enrollPassword != null" >
+        enroll_password = #{record.enrollPassword,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update lab_clock_in_machine_user
+    set id = #{record.id,jdbcType=BIGINT},
+      enroll_id = #{record.enrollId,jdbcType=BIGINT},
+      clockin_id = #{record.clockinId,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      operator_id = #{record.operatorId,jdbcType=INTEGER},
+      lab_id = #{record.labId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      user_privilege = #{record.userPrivilege,jdbcType=VARCHAR},
+      id_flag = #{record.idFlag,jdbcType=TINYINT},
+      is_deleted = #{record.isDeleted,jdbcType=BIT},
+      enroll_password = #{record.enrollPassword,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update lab_clock_in_machine_user
+    set id = #{record.id,jdbcType=BIGINT},
+      enroll_id = #{record.enrollId,jdbcType=BIGINT},
+      clockin_id = #{record.clockinId,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      operator_id = #{record.operatorId,jdbcType=INTEGER},
+      lab_id = #{record.labId,jdbcType=BIGINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      user_privilege = #{record.userPrivilege,jdbcType=VARCHAR},
+      id_flag = #{record.idFlag,jdbcType=TINYINT},
+      is_deleted = #{record.isDeleted,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fengbiaoedu.bean.LabClockInMachineUser" >
+    update lab_clock_in_machine_user
+    <set >
+      <if test="enrollId != null" >
+        enroll_id = #{enrollId,jdbcType=BIGINT},
+      </if>
+      <if test="clockinId != null" >
+        clockin_id = #{clockinId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=INTEGER},
+      </if>
+      <if test="labId != null" >
+        lab_id = #{labId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userPrivilege != null" >
+        user_privilege = #{userPrivilege,jdbcType=VARCHAR},
+      </if>
+      <if test="idFlag != null" >
+        id_flag = #{idFlag,jdbcType=TINYINT},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="enrollPassword != null" >
+        enroll_password = #{enrollPassword,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fengbiaoedu.bean.LabClockInMachineUser" >
+    update lab_clock_in_machine_user
+    set enroll_id = #{enrollId,jdbcType=BIGINT},
+      clockin_id = #{clockinId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      operator_id = #{operatorId,jdbcType=INTEGER},
+      lab_id = #{labId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_privilege = #{userPrivilege,jdbcType=VARCHAR},
+      id_flag = #{idFlag,jdbcType=TINYINT},
+      is_deleted = #{isDeleted,jdbcType=BIT},
+      enroll_password = #{enrollPassword,jdbcType=LONGVARBINARY}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fengbiaoedu.bean.LabClockInMachineUser" >
+    update lab_clock_in_machine_user
+    set enroll_id = #{enrollId,jdbcType=BIGINT},
+      clockin_id = #{clockinId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      operator_id = #{operatorId,jdbcType=INTEGER},
+      lab_id = #{labId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_privilege = #{userPrivilege,jdbcType=VARCHAR},
+      id_flag = #{idFlag,jdbcType=TINYINT},
+      is_deleted = #{isDeleted,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  	
+  	<!-- 已排除，用户已被删除的情况下，新增，不会出现返回主键为null的情况 -->
+  	<insert id="save" parameterType="map"  keyProperty="id">
+		<selectKey keyProperty="id" resultType="long" order="AFTER">
+			select LAST_INSERT_ID();
+		 </selectKey>
+		INSERT INTO lab_clock_in_machine_user(clockin_id,user_name,user_id,create_time,operator_id,lab_id)
+		VALUES(#{clockinId},#{user.name},#{user.userId},NOW(),#{operatorId},#{labId})
+		ON DUPLICATE KEY UPDATE  is_deleted = 0
+	</insert>
+	
+	
+	
+	<select id="getUserNumber" resultType="int">
+		SELECT
+			u.id
+		FROM
+			lab_clock_in_machine_user AS cu
+		LEFT JOIN `user` AS u ON cu.user_id = u.id
+		WHERE
+			cu.user_id = #{userId}
+	</select>
+	
+	<delete id="deleteByUserId">
+		DELETE
+		FROM
+			lab_clock_in_machine_user
+		WHERE
+			lab_clock_in_machine_user.user_id = #{userId}
+	</delete>
+	
+	<update id="updateToDeleted">
+		UPDATE lab_clock_in_machine_user AS cmu
+		SET  cmu.is_deleted =1,update_time =now()
+		WHERE cmu.enroll_id =#{userId}
+		
+	</update>
+	<!-- 批量更新用户的id_flag -->
+	<update id="batchUpdateUserIdFlag" parameterType="java.util.List">
+		update lab_clock_in_machine_user
+	    set 
+	      id_flag = id/999999999,
+	      enroll_id =id%999999999
+	    where id in
+	    <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+	           #{id}
+	    </foreach>
+    
+	</update>
+	
+	<update id="batchUpdateUserEnrollId" parameterType="java.util.List">
+		update lab_clock_in_machine_user
+	    set 
+	      enroll_id =id%999999999
+	    where id in
+	    <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+	           #{id}
+	    </foreach>
+    
+	</update>
+	
+	<select id="selectClockinIdListByUserId" resultMap="BaseResultMap">
+		SELECT cmu.clockin_id,cmu.enroll_id,cmu.lab_id
+		FROM  lab_clock_in_machine_user AS cmu
+		WHERE cmu.user_id=#{userId}
+	  <if test="exclude == true" >
+		AND  cmu.clockin_id NOT IN (#{clockinId})
+      </if>
+	</select>
+	
+	<select id="selectUserIdListByUserIdList"  resultType="int" >
+		SELECT cmu.user_id
+		FROM lab_clock_in_machine_user AS cmu
+		WHERE  cmu.clockin_id=#{clockinId}
+		AND cmu.user_id IN 
+		<foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+		#{id}
+		</foreach>
+	</select>
+	
+	<select id="selectCountByUserId" parameterType="int" resultType="int">
+		SELECT COUNT(user_id) AS number
+		FROM lab_clock_in_machine_user
+		WHERE user_id =#{userId}
+	</select>
+	
+	<select id="selectByUserIdListAndClockinId" resultMap="BaseResultMap">
+		SELECT cmu.id,cmu.enroll_id,cmu.user_id
+		FROM lab_clock_in_machine_user AS cmu
+		WHERE cmu.clockin_id =#{clockinId} AND cmu.user_id IN 
+		<foreach collection="userIdList" item="userId" index="index" open="(" close=")" separator=",">
+			#{userId}
+		</foreach>
+	
+	</select>
+  
+</mapper>

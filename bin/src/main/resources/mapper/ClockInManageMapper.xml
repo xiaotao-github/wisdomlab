@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fengbiaoedu.mapper.ClockInManageMapper">
+	<resultMap type="com.fengbiaoedu.pojo.ClockUser" id="clockUser">
+		<result column="id" property="userId" javaType="int" jdbcType="INTEGER" />
+		<result column="name" property="name" javaType="string"
+			jdbcType="VARCHAR" />
+		<result column="type" property="type" javaType="int" jdbcType="INTEGER" />
+		<result column="username" property="username" javaType="string"
+			jdbcType="VARCHAR" />
+		<result column="class_id" property="classId" javaType="int"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<!--得到准备注册到考勤机的用户工号和姓名 -->
+	<select id="getClockUserListByClassId" resultMap="clockUser"
+		parameterType="map">
+		SELECT
+		u.id AS user_id,
+		si.`name`
+		FROM
+		`user` AS u
+		INNER JOIN student_info AS si ON u.id = si.id
+		WHERE
+		si.tb_class_id = #{classId}
+		AND NOT EXISTS (
+		SELECT
+		*
+		FROM
+		clock_in_machine_user AS cmu
+		WHERE
+		cmu.clockin_id = #{clockinId}
+		AND u.id =cmu.user_id
+		)
+		UNION
+		SELECT
+		u.id AS user_id,
+		si.`name`
+		FROM `user` AS u
+		INNER JOIN student_info AS si ON u.id =si.id
+		WHERE
+		si.tb_class_id =#{classId}
+		AND EXISTS (
+		SELECT *
+		FROM clock_in_machine_user AS cmu
+		WHERE clockin_id =#{clockinId}
+		AND u.id =cmu.user_id
+		AND cmu.is_deleted ='1'
+		)
+	</select>
+	<!--得到准备注册到考勤机的用户工号和姓名 -->
+	<select id="getClockUserListByLabId" resultMap="clockUser"
+		parameterType="map">
+		SELECT si.name, si.id ,u.type,u.username,si.tb_class_id
+		AS class_id from experiment_lab AS el
+		INNER JOIN course_schedule AS cs
+		ON (el.lab_id =cs.lab_id AND cs.stealth =2 AND el.stealth =2)
+		INNER
+		JOIN schedule_class as sc ON (cs.schedule_id =sc.schedule_id AND
+		sc.stealth=2)
+		INNER JOIN student_info AS si ON ( sc.class_id =
+		si.tb_class_id AND sc.stealth =2)
+		INNER JOIN `user` AS u ON (u.type=2
+		AND si.id =u.id AND u.stealth =2)
+		WHERE el.lab_id =#{labId}
+		AND NOT EXISTS (
+		SELECT
+		cmu.user_id
+		FROM
+		clock_in_machine_user AS cmu
+		WHERE
+		cmu.clockin_id = #{clockinId}
+		AND si.id =cmu.user_id
+		AND cmu.is_deleted =0
+		)
+
+		UNION
+
+		SELECT si.name, si.id,u.type,u.username,si.tb_class_id AS class_id from
+		experiment_lab AS el
+		INNER JOIN course_schedule AS cs ON (el.lab_id
+		=cs.lab_id AND cs.stealth =2 AND el.stealth =2)
+		INNER JOIN
+		scourse_student AS ss ON cs.schedule_id =ss.schedule_id
+		INNER JOIN
+		student_info AS si ON ( ss.student_id = si.id )
+		INNER JOIN `user` AS u
+		ON (u.type=2 AND si.id =u.id AND u.stealth =2)
+		WHERE el.lab_id
+		=#{labId}
+		AND NOT EXISTS (
+		SELECT
+		cmu.user_id
+		FROM
+		clock_in_machine_user AS cmu
+		WHERE
+		cmu.clockin_id = #{clockinId}
+		AND si.id =cmu.user_id
+		AND cmu.is_deleted =0
+		)
+		GROUP BY si.id
+		ORDER BY NULL
+	</select>
+
+
+	<!--更新学生打卡信息 -->
+	<update id="save" parameterType="ScheduleStudentScore">
+		UPDATE schedule_student_score SET signin = #{signin},signin_time=
+		#{signinTime},update_time = #{updateTime} WHERE
+		schedule_student_score_id = #{scheduleStudentScoreId}
+	</update>
+
+	<update id="updateClockInUserInfo" parameterType="map">
+		UPDATE
+		clock_in_user_info cui
+		SET cui.`name` = '515164'
+		WHERE
+		cui.student_id = '1111';
+	</update>
+
+
+</mapper>

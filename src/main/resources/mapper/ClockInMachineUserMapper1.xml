@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fengbiaoedu.mapper.ClockInMachineUserMapper1">
+
+	<insert id="save" parameterType="map"  keyProperty="id">
+		<!--selectKey使用-->
+		<!--
+		mybatis可以将insert的数据的主键返回，直接拿到新增数据的主键，以便后续使用。
+		selectKey 会将 SELECT LAST_INSERT_ID()的结果放入到传入的model的主键里面，
+        keyProperty 对应的model中的主键的属性名，这里是 表 中的id，因为它跟数据库的主键对应，
+        order AFTER 表示 SELECT LAST_INSERT_ID() 在insert执行之后执行,多用与自增主键，
+        BEFORE 表示 SELECT LAST_INSERT_ID() 在insert执行之前执行，这样的话就拿不到主键了，这种适合那种主键不是自增的类型，
+        resultType 主键类型
+		-->
+		<selectKey keyProperty="id" resultType="long" order="AFTER">
+			select LAST_INSERT_ID();
+		 </selectKey>
+		INSERT INTO clock_in_machine_user(clockin_id,user_name,user_id,create_time)
+		VALUES(#{clockInId},#{user.name},#{user.userId},NOW())
+	</insert>
+	<select id="getUserNumber" resultType="int">
+		SELECT
+			u.id
+		FROM
+			clock_in_machine_user AS cu
+		LEFT JOIN `user` AS u ON cu.user_id = u.id
+		WHERE
+			cu.user_id = #{userId}
+	</select>
+	
+	<update id="updateIdFalg">
+	</update>
+	
+	<delete id="deleteByPrimaryKey">
+		DELETE
+		FROM
+			clock_in_machine_user
+		WHERE
+			clock_in_machine_user.user_id = #{userId}
+	</delete>
+	
+	<update id="updateToDeleted">
+		UPDATE clock_in_machine_user AS cmu
+		SET  cmu.is_deleted =1
+		WHERE cmu.user_id =#{userId}
+		
+	</update>
+</mapper>
